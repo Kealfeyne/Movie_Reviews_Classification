@@ -1,2 +1,4 @@
 /.idea
 /data
+/trained_models
+/ml_model/wandb

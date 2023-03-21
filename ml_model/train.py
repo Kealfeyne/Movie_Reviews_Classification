@@ -3,6 +3,7 @@ import pandas as pd
 from torch import nn
 from torch.optim import Adam
 from tqdm import tqdm
+import wandb
 from classifier import BertClassifier
 from dataset import Dataset
 
@@ -21,6 +22,8 @@ def train(model, train_data, val_data, learning_rate, epochs, batch_size=4):
     if torch.cuda.is_available():
         model = model.cuda()
         criterion = criterion.cuda()
+
+    run = wandb.init(project="Greenatom", name='bert_finetuned')
 
     for epoch_num in range(epochs):
 
@@ -62,17 +65,30 @@ def train(model, train_data, val_data, learning_rate, epochs, batch_size=4):
                 acc = (output.argmax(dim=1) == val_label).sum().item()
                 total_acc_val += acc
 
+        torch.save(model.state_dict(), f"../trained_models/bert_base_uncased_{epoch_num}epochs.pt")
+
         print(
-            f'Epochs: {epoch_num + 1} | Train Loss: {total_loss_train / len(train_data): .3f} \
-                | Train Accuracy: {total_acc_train / len(train_data): .3f} \
-                | Val Loss: {total_loss_val / len(val_data): .3f} \
+            f'Epochs: {epoch_num + 1} | Train Loss: {total_loss_train / len(train_data): .3f}\
+                | Train Accuracy: {total_acc_train / len(train_data): .3f}\
+                | Val Loss: {total_loss_val / len(val_data): .3f}\
                 | Val Accuracy: {total_acc_val / len(val_data): .3f}')
+
+        wandb.log({
+            'epoch': epoch_num + 1,
+            'train_loss': total_loss_train / len(train_data),
+            'train_acc': total_acc_train / len(train_data),
+            'val_loss': total_loss_val / len(val_data),
+            'val_acc': total_acc_val / len(val_data)
+        })
+
+    wandb.finish()
 
 
 bc = BertClassifier()
 df_train = pd.read_csv("../data/train.csv")
 df_val = pd.read_csv("../data/test.csv")
-lr = 1e-6
-num_of_epochs = 5
+lr = 1e-5
+num_of_epochs = 30
 
-train(bc, df_train.iloc[0:1000], df_val.iloc[0:1000], lr, num_of_epochs)
+train(bc, df_train, df_val, lr, num_of_epochs)
+
