@@ -84,11 +84,9 @@ def train(model, train_data, val_data, learning_rate, epochs, batch_size=4):
     wandb.finish()
 
 
-bc = BertClassifier()
-df_train = pd.read_csv("../data/train.csv")
-df_val = pd.read_csv("../data/test.csv")
-lr = 1e-5
-num_of_epochs = 30
-
-train(bc, df_train, df_val, lr, num_of_epochs)
-
+train(model=BertClassifier(),
+      train_data=pd.read_csv("../data/train.csv"),
+      val_data=pd.read_csv("../data/test.csv"),
+      learning_rate=1e-5,
+      epochs=10,
+      batch_size=2)
