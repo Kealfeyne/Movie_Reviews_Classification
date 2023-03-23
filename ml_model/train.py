@@ -74,5 +74,6 @@ df_train = pd.read_csv("../data/train.csv")
 df_val = pd.read_csv("../data/test.csv")
 lr = 1e-6
 num_of_epochs = 5
+batch_size = 1
 
-train(bc, df_train.iloc[0:1000], df_val.iloc[0:1000], lr, num_of_epochs)
+train(bc, df_train.iloc[0:10000], df_val.iloc[0:10000], lr, num_of_epochs, batch_size)
