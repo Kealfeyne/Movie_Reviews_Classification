@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-</head>
-<Title>Get score by film reviews</Title>
-</head>
+<h1>Get score by film reviews</h1>
 <body>
 <form action="" method="POST">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="Submit" name="submit" value="Submit"/>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="Submit" name="submit" value="Predict"/>
 </form>
 
-{% if submitbutton == "Submit" %}
-<h1>Review score is {{ predict_id }} - {{binary_predict_id }}</h1>
+{% if submitbutton == "Predict" %}
+<h2>Review score is {{ predict_id }}/10 - {{binary_predict_id }}</h2>
 {% endif %}
 
 </body>
-
-
 </html>
