@@ -19,10 +19,10 @@ def compute_metrics(p):
     return {"accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
 
 
-train_data = pd.read_csv("../data/train.csv").iloc[0:2000]
-val_data = pd.read_csv("../data/test.csv").iloc[0:2000]
+train_data = pd.read_csv("../data/train.csv")
+val_data = pd.read_csv("../data/test.csv")
 
-model_name = "distilbert-base-uncased"
+model_name = "bert-base-uncased"
 tokenizer = BertTokenizer.from_pretrained(model_name)
 model = BertForSequenceClassification.from_pretrained(model_name, num_labels=9)
 
