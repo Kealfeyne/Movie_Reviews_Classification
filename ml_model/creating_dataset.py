@@ -25,15 +25,15 @@ def create_dataset(path_to_data: str = "../data/") -> (pd.DataFrame, pd.DataFram
 
     train = pd.concat((pd.DataFrame(parse_folder(path_to_data + "train/neg/")),
                        pd.DataFrame(parse_folder(path_to_data + "train/pos/")))).reset_index(drop=True)
-    train['label'].apply(lambda x: int(labels[int(x)]))
+    # train['label'].apply(lambda x: int(labels[int(x)]))
     train.to_csv(path_to_data + "train.csv", index=True)
 
     test = pd.concat((pd.DataFrame(parse_folder(path_to_data + "test/neg/")),
                       pd.DataFrame(parse_folder(path_to_data + "test/pos/")))).reset_index(drop=True)
-    test['label'].apply(lambda x: int(labels[int(x)]))
+    # test['label'].apply(lambda x: int(labels[int(x)]))
     test.to_csv(path_to_data + "test.csv", index=True)
 
     return train, test
 
 
-# create_dataset()
+create_dataset()

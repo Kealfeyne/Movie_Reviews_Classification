@@ -5,21 +5,21 @@ from transformers import BertTokenizer
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
 
-# labels = {1: 0,
-#           2: 1,
-#           3: 2,
-#           4: 3,
-#           6: 4,
-#           7: 5,
-#           8: 6,
-#           9: 7,
-#           10: 8}
+labels = {1: 0,
+          2: 1,
+          3: 2,
+          4: 3,
+          6: 4,
+          7: 5,
+          8: 6,
+          9: 7,
+          10: 8}
 
 
 class Dataset(torch.utils.data.Dataset):
 
     def __init__(self, df):
-        self.labels = df['label'].values
+        self.labels = [labels[label] for label in df['label']]
         self.texts = [tokenizer(text,
                                 padding='max_length', max_length=512, truncation=True,
                                 return_tensors="pt") for text in df['content']]
