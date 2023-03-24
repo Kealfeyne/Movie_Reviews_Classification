@@ -1,4 +1,8 @@
 /.idea
 /data
-/trained_models
 /ml_model/wandb
+/ml_model/bertforsequnceclassification
+/ml_model/output
+
+/reviews_classification.egg-info
+/setup.py
