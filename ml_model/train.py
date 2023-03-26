@@ -12,9 +12,9 @@ def compute_metrics(p):
     pred = np.argmax(pred, axis=1)
 
     accuracy = accuracy_score(y_true=labels, y_pred=pred)
-    recall = recall_score(y_true=labels, y_pred=pred)
-    precision = precision_score(y_true=labels, y_pred=pred)
-    f1 = f1_score(y_true=labels, y_pred=pred)
+    recall = recall_score(y_true=labels, y_pred=pred, average='macro')
+    precision = precision_score(y_true=labels, y_pred=pred, average='macro')
+    f1 = f1_score(y_true=labels, y_pred=pred, average='macro')
 
     return {"accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
 
@@ -40,13 +40,13 @@ val_dataset = Dataset(X_val_tokenized, y_val)
 wandb.init(project="Greenatom", name="bertforseqclass")
 
 args = TrainingArguments(
-    output_dir="bertforaeqclass_trained_models",
+    output_dir="bertforseqclass_trained_models",
     evaluation_strategy="epoch",
     save_strategy="epoch",
     # eval_steps=500,
-    per_device_train_batch_size=1,
-    per_device_eval_batch_size=1,
-    num_train_epochs=3,
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
+    num_train_epochs=30,
     seed=0,
     load_best_model_at_end=True,
     report_to=["wandb"]

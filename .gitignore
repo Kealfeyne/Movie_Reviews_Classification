@@ -1,7 +1,7 @@
 /.idea
 /data
 /ml_model/wandb
-/ml_model/bertforsequnceclassification
+/ml_model/bertforseqclass_trained_models
 /ml_model/output
 
 /reviews_classification.egg-info
